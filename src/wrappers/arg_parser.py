@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 
 def parse_wrapper_args(run_first):
@@ -36,7 +37,7 @@ def parse_wrapper_args(run_first):
     args = parser.parse_args()
 
     if args.option == 'run_first':
-        print run_first
+        print (run_first)
 
     return args
 

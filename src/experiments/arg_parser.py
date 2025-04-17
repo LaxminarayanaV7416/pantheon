@@ -4,12 +4,12 @@ import yaml
 import argparse
 
 import context
-from helpers import utils
+import helpers.utils as utils
 
 
 def verify_schemes(schemes):
     schemes = schemes.split()
-    all_schemes = utils.parse_config()['schemes'].keys()
+    all_schemes = list(utils.parse_config()['schemes'].keys())
 
     for cc in schemes:
         if cc not in all_schemes:
@@ -174,8 +174,9 @@ def verify_test_args(args):
             sys.exit('Cannot apply --prepend-mm-cmds, --append-mm-cmds or '
                      '--extra-mm-link-args without pantheon tunnels')
 
-    if args.runtime > 60 or args.runtime <= 0:
-        sys.exit('runtime cannot be non-positive or greater than 60 s')
+
+    if args.runtime > 120 or args.runtime <= 0:
+        sys.exit('runtime cannot be non-positive or greater than 360 s')
     if args.flows < 0:
         sys.exit('flow cannot be negative')
     if args.interval < 0:
