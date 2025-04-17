@@ -13,7 +13,7 @@ RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 RUN apt-get update && apt-get install -y \
     git python3 python3-pip python3-venv \
     build-essential cmake \
-    gcc-11 g++-11 python3 \
+    gcc-11 g++-11 python3 bpftrace \
     python3-pip \
     python3-venv \
     libgoogle-glog-dev libgflags-dev \
@@ -59,8 +59,12 @@ RUN cd pantheon/third_party/pantheon-tunnel && \
 # Set working directory
 WORKDIR /pantheon
 
-COPY src src
+RUN apt-get install linux-headers-$(uname -r)
 
+COPY src src
+COPY ebpf ebpf
+
+# RUN python src/experiments/setup_system.py --enable-ip-forward --set-all-mem --qdisc fq
 RUN src/experiments/setup.py --install-deps --all
 
 # Create a new user (e.g., "appuser") and give sudo if needed
