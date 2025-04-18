@@ -3,6 +3,7 @@ FROM ubuntu:20.04
 
 # Avoid interactive prompts during package install
 ENV DEBIAN_FRONTEND=noninteractive
+ENV CUDA_VISIBLE_DEVICES=""
 
 # Install software-properties-common to get add-apt-repository
 RUN apt-get update && apt-get install -y software-properties-common
@@ -12,17 +13,17 @@ RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git python3 python3-pip python3-venv \
-    build-essential cmake \
+    build-essential cmake libboost-system-dev \
     gcc-11 g++-11 python3 bpftrace \
-    python3-pip \
-    python3-venv \
+    python3-pip libasio-dev \
+    python3-venv libalglib-dev \
     libgoogle-glog-dev libgflags-dev \
     libprotobuf-dev protobuf-compiler \
     libboost-all-dev libnl-3-dev libnl-genl-3-dev \
     libssl-dev libcurl4-openssl-dev libevent-dev \
     libncurses-dev pkg-config iptables apache2 \
     wget curl unzip dnsmasq apache2-dev \
-    ntp ntpdate texlive \
+    ntp ntpdate texlive autoconf \
     debhelper autotools-dev dh-autoreconf \
     sudo iproute2 iputils-ping libxcb1-dev libx11-dev libxcb-dri3-dev libxcb-present-dev libpango1.0-dev \
     && apt-get clean
@@ -43,7 +44,7 @@ RUN apt-get install -y mahimahi
 #     make && \
 #     make install
 
-RUN pip install matplotlib numpy tabulate pyyaml
+RUN pip install matplotlib numpy tabulate pyyaml tensorflow
 
 # Clone Pantheon
 RUN git clone https://github.com/StanfordSNR/pantheon.git && \
@@ -58,8 +59,6 @@ RUN cd pantheon/third_party/pantheon-tunnel && \
 
 # Set working directory
 WORKDIR /pantheon
-
-RUN apt-get install linux-headers-$(uname -r)
 
 COPY src src
 COPY ebpf ebpf

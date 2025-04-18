@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 from os import path
+import os
 import sys
 import math
 import itertools
 import numpy as np
 import matplotlib_agg
 import matplotlib.pyplot as plt
-
+import csv
 import arg_parser
 
 
@@ -276,7 +277,10 @@ class TunnelGraph(object):
                 x_values = self.ingress_t[flow_id]
                 y_values = self.ingress_tput[flow_id]
 
-                with open('./LSTM/data.csv', 'w') as f:
+                temp_dir,_ = os.path.split(self.tunnel_log)
+
+                CSV_PATH = os.path.join(temp_dir, 'data.csv')
+                with open(CSV_PATH, 'w') as f:
                     fields = ["Time","Throughput"]
                     writer = csv.writer(f)
                     writer.writerow(fields)

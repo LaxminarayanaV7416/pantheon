@@ -26,7 +26,7 @@ def main():
             cmd += ['--include-acklink']
 
     check_call(plot_cmd)
-    check_call(report_cmd)
+    # check_call(report_cmd)
 
 
 if __name__ == '__main__':
