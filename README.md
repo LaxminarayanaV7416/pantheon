@@ -86,3 +86,7 @@ src/analysis/analyze.py \
 For issues, check the [Mahimahi documentation](http://mahimahi.mit.edu/).  
 
 --- 
+
+
+for i in {1..60}; do echo 50 >> ./src/experiments/50mbps.trace; done
+for i in {1..60}; do echo 1 >> ./src/experiments/1mbps.trace; done
