@@ -40,5 +40,13 @@ src/experiments/test.py local \
 --downlink-trace='./src/experiments/1mbps.trace' \
 --prepend-mm-cmds "mm-delay 100"
 
+
 src/analysis/analyze.py \
 --data-dir='./src/experiments/data/highLatencyLowBandwidth'
+
+
+assignment_runs/local_run.py \
+--config-name "vegas" \
+--trace-file-path "./src/experiments/1mbps.trace" \
+--data-dir-path "./src/experiments/data/highLatencyLowBandwidthTrail" \
+--delay 100

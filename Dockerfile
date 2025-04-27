@@ -62,6 +62,7 @@ WORKDIR /pantheon
 
 COPY src src
 COPY ebpf ebpf
+COPY assignment_runs assignment_runs
 
 # RUN python src/experiments/setup_system.py --enable-ip-forward --set-all-mem --qdisc fq
 RUN src/experiments/setup.py --install-deps --all
@@ -76,4 +77,4 @@ RUN chown -R appuser:appuser /pantheon
 USER appuser
 
 # Use bash as default shell
-CMD ["/bin/bash"]
+CMD ["./assignment_runs/run.sh"]
